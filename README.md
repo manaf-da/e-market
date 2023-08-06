@@ -1,2 +1,3 @@
 # e-market
-Fullstack ecommerce with tailwind css
+
+Fullstack e-commerce with tailwind css
