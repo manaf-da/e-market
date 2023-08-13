@@ -1,21 +1,50 @@
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../styles/styles";
-import { Link } from "react-router-dom";
-import { RxAvatar } from "react-icons/rx";
+import { Link, useNavigate } from "react-router-dom";
 import { BsPerson } from "react-icons/bs";
+import axios from "axios";
+import { server } from "../../server";
+import { toast } from "react-toastify";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [avatar, setAvatar] = useState(null);
 
-  const handleFileInputChange = (e) => {};
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+
+    setAvatar(file);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
+
+    const newForm = new FormData();
+
+    newForm.append("file", avatar);
+    newForm.append("name", name);
+    newForm.append("email", email);
+    newForm.append("password", password);
+
+    axios
+      .post(`${server}/user/create-user`, newForm, config)
+      .then((res) => {
+        toast.success(res.data.message);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setAvatar();
+      });
   };
 
   return (
@@ -113,7 +142,7 @@ const Signup = () => {
                 <span className="inline-block h-8 w-8  overflow-hidden">
                   {avatar ? (
                     <img
-                      src={avatar}
+                      src={URL.createObjectURL(avatar)}
                       alt="avatar"
                       className="h-full w-full object-cover "
                     />
