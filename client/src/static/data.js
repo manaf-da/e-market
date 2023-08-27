@@ -1,7 +1,7 @@
-import camera from "../assets/camera.jpg";
-import speaker from "../assets/speaker.jpg";
-import watch from "../assets/watch.jpg";
-import headphone from "../assets/headphone.jpg";
+import camera1 from "../assets/camera1.png";
+import speaker1 from "../assets/speaker1.png";
+import watch1 from "../assets/watch1.png";
+import headphone1 from "../assets/headphone1.png";
 import {
   MdOutlineLocalShipping,
   MdOutlineLocalOffer,
@@ -16,25 +16,25 @@ export const slides = [
     title: "Camera",
     description:
       "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.",
-    imageUrl: camera,
+    imageUrl: camera1,
   },
   {
     title: "watch",
     description:
       "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.",
-    imageUrl: watch,
+    imageUrl: watch1,
   },
   {
     title: "headphone",
     description:
       "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.",
-    imageUrl: headphone,
+    imageUrl: headphone1,
   },
   {
     title: "speaker",
     description:
       "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.",
-    imageUrl: speaker,
+    imageUrl: speaker1,
   },
 ];
 // navigation Data

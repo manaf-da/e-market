@@ -56,7 +56,7 @@ const Slides = () => {
         >
           {slides[currentSlide].title}
         </h1>
-        <p className="pt-5 text-[16px] font-[Poppins] font-[400] text-[#000000ba] ">
+        <p className="pt-5 text-[16px] font-[Poppins] font-[400] text-[#000000ba] line-camp-3 ">
           {slides[currentSlide].description}
         </p>
 

@@ -4,9 +4,10 @@ const styles = {
     "text-[27px] text-center md:text-start font-[600] font-Roboto pb-[20px]",
   section: "w-11/12 mx-auto",
   productTitle: "text-[25px] font-[600] font-Roboto text-[#333]",
-  productDiscountPrice: "font-bold text-[18px] text-[#333] font-Roboto",
-  price: "font-[500] text-[16px] text-[#248277] pl-3 mt-[-4px] line-through",
-  shop_name: "pt-3 text-[15px] text-blue-400 pb-3",
+  productDiscountPrice: "font-bold text-[18px] text-[#EA242C] font-Roboto",
+  price:
+    "font-[700] text-[16px] text-[#111d13] pl-3 mt-[-1px] line-through decoration-2",
+  shop_name: "pt-3 text-xs text-blue-500 pb-3",
   active_indicator: "absolute bottom-[-27%] left-0 h-[3px] w-full bg-[crimson]",
   button:
     "w-[120px] h-[45px] bg-[#036666]  my-3 flex items-center justify-center  cursor-pointer",
