@@ -500,7 +500,7 @@ export const footerProductLinks = [
   },
   {
     name: "Careers",
-    link: "/carrers",
+    link: "/careers",
   },
   {
     name: "Store Locations",
@@ -513,7 +513,7 @@ export const footerProductLinks = [
   },
 ];
 
-export const footercompanyLinks = [
+export const footerCompanyLinks = [
   {
     name: "Game & Video",
   },

@@ -27,7 +27,7 @@ const EventCard = () => {
               999$
             </h5>
           </div>
-          <span className="pr-3 font-[400] text-[17px] text-[#32994d]">
+          <span className="pr-3 font-bold  text-[17px] text-[#32994d]">
             120 sold
           </span>
         </div>
