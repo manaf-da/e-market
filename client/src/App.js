@@ -2,8 +2,10 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
   ActivationPage,
+  BestSellingPage,
   HomePage,
   LoginPage,
+  ProductPage,
   SignupPage,
 } from "./routes/Routes.js";
 import { ToastContainer } from "react-toastify";
@@ -29,6 +31,8 @@ const App = () => {
           path="/activation/:activation_token"
           element={<ActivationPage />}
         />
+        <Route path="/products" element={<ProductPage />} />
+        <Route path="/best-selling" element={<BestSellingPage />} />
       </Routes>
       <ToastContainer
         position="top-right"
