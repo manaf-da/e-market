@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { navItems } from "../../static/data";
 import styles from "../../styles/styles";
 
-const Navabar = ({ active }) => {
+const Navbar = ({ active }) => {
   return (
     <div className={`block 800px:${styles.normalFlex}`}>
       {navItems &&
@@ -25,4 +25,4 @@ const Navabar = ({ active }) => {
   );
 };
 
-export default Navabar;
+export default Navbar;

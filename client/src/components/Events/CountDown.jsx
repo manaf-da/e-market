@@ -47,7 +47,7 @@ const CountDown = () => {
     }
 
     return (
-      <span style={style}>
+      <span key={interval} style={style}>
         {timeLeft[interval]} {interval}{" "}
       </span>
     );
