@@ -10,7 +10,6 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/styles";
 
 const ProductDetails = ({ data }) => {
-  console.log(data);
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);

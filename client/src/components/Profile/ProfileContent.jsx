@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { backend_url } from "../../server";
 import { useSelector } from "react-redux";
-import { AiOutlineCamera, AiOutlineArrowRight } from "react-icons/ai";
+import {
+  AiOutlineCamera,
+  AiOutlineArrowRight,
+  AiOutlineDelete,
+} from "react-icons/ai";
 import styles from "../../styles/styles";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import MdOutlineTrackChanges from 'react-icons/md'
+import { MdOutlineTrackChanges } from "react-icons/md";
 
 const ProfileContent = ({ active }) => {
   const { user } = useSelector((state) => state.user);
@@ -14,6 +18,9 @@ const ProfileContent = ({ active }) => {
   const [email, setEmail] = useState(user && user.email);
   const [phoneNumber, setPhoneNumber] = useState(user && user.phoneNumber);
   const [password, setPassword] = useState(user && user.password);
+  const [zipCode, setZipCode] = useState();
+  const [address1, setAddress1] = useState();
+  const [address2, setAddress2] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -78,13 +85,41 @@ const ProfileContent = ({ active }) => {
                 </div>
 
                 <div className=" w-[100%] 800px:w-[50%]">
-                  <label className="block pb-2">Enter your password</label>
+                  <label className="block pb-2">Zip Code</label>
                   <input
-                    type="password"
+                    type="number"
                     className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
                     required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={zipCode}
+                    onChange={(e) => setZipCode(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="w-full 800px:flex block pb-3">
+                <div className=" w-[100%] 800px:w-[50%]">
+                  <label className="block pb-2">Address 1</label>
+                  <input
+                    type="text"
+                    className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                    required
+                    value={address1}
+                    onChange={(e) => setAddress1(e.target.value)}
+                  />
+                </div>
+
+                <div className=" w-[100%] 800px:w-[50%]">
+                  <label className="block pb-2">
+                    Address 1
+                    <span className="text-gray-500 text-base ml-1">
+                      (Optional)
+                    </span>
+                  </label>
+                  <input
+                    type="number"
+                    className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                    required
+                    value={address2}
+                    onChange={(e) => setAddress2(e.target.value)}
                   />
                 </div>
               </div>
@@ -115,6 +150,18 @@ const ProfileContent = ({ active }) => {
       {active === 5 && (
         <div>
           <TrackOrders />
+        </div>
+      )}
+      {/* Track order Page */}
+      {active === 6 && (
+        <div>
+          <PaymentMethod />
+        </div>
+      )}
+      {/* Address Page */}
+      {active === 7 && (
+        <div>
+          <Address />
         </div>
       )}
     </div>
@@ -374,7 +421,7 @@ const TrackOrders = () => {
     },
   ];
 
-  const column =[
+  const column = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
     {
       field: "status",
@@ -419,10 +466,62 @@ const TrackOrders = () => {
         );
       },
     },
+  ];
 
-  ]
+  const row = orders.map((item) => ({
+    id: item._id,
+    itemsQty: item.orderItems.length,
+    total: "US$ " + item.totalPrice,
+    status: item.orderStatus,
+  }));
 
-  return ()
+  return (
+    <div className="pl-8 pt-1">
+      <DataGrid
+        rows={row}
+        columns={column}
+        pageSize={10}
+        disableSelectionOnClick
+        autoHeight
+      />
+    </div>
+  );
+};
+
+const PaymentMethod = () => {
+  return (
+    <div className="w-full px-5">
+      <div className="flex w-full items-center justify-between">
+        <h1 className="text-[25px] font-[600] text-[#000] pb-2">
+          Payment Methods
+        </h1>
+        <div className={`${styles.button}`}>
+          <span className="text-[#fff]">Add New</span>
+        </div>
+      </div>
+      <br />
+      <div className="w-full bg-white h-[70px] flex items-center px-3 shadow justify-between pr-10">
+        <div className="flex items-center">
+          <img
+            src="https://bonik-react.vercel.app/assets/images/payment-methods/Visa.svg"
+            alt="payment"
+          />
+          <h5 className="pl-5 font-[600]"> simi maxwell</h5>
+        </div>
+        <div className="pl-8 flex font-[600] items-center gap-10">
+          <h6>1234 **** **** ****</h6>
+          <h5 className="pl-6"> 09/2026</h5>
+        </div>
+        <div className="min-w-[10%] flex  items-center justify-between pl-8">
+          <AiOutlineDelete size={22} className="cursor-pointer" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Address = () => {
+  return <div className="w-full px-5"></div>;
 };
 
 export default ProfileContent;

@@ -4,10 +4,27 @@ import { BsPerson } from "react-icons/bs";
 import { LiaShoppingBasketSolid, LiaAddressBookSolid } from "react-icons/lia";
 import { HiOutlineReceiptRefund } from "react-icons/hi";
 import { RiMessage2Line, RiLockPasswordLine } from "react-icons/ri";
-import { MdOutlineSpatialTracking, MdLogout } from "react-icons/md";
+import { MdOutlineSpatialTracking, MdLogout, MdPayment } from "react-icons/md";
+import { server } from "../../server";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const ProfileSidebar = ({ setActive, active }) => {
   const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    axios
+      .get(`${server}/user/logout`, { withCredentials: true })
+      .then((res) => {
+        toast.success(res.data.message);
+        window.location.reload(true);
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+      });
+  };
+
   return (
     <div className="w-full bg-white shadow-sm  p-4 pt-8">
       <div
@@ -79,13 +96,13 @@ const ProfileSidebar = ({ setActive, active }) => {
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(6)}
       >
-        <RiLockPasswordLine size={20} color={active === 6 ? "red" : ""} />
+        <MdPayment size={20} color={active === 6 ? "red" : ""} />
         <span
           className={`pl-3 ${
             active === 6 ? "text-[red]" : ""
           } 800px:block hidden`}
         >
-          Change Password
+          Payment Method
         </span>
       </div>
       <div
@@ -105,10 +122,23 @@ const ProfileSidebar = ({ setActive, active }) => {
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(8)}
       >
-        <MdLogout size={20} color={active === 8 ? "red" : ""} />
+        <RiLockPasswordLine size={20} color={active === 8 ? "red" : ""} />
         <span
           className={`pl-3 ${
             active === 8 ? "text-[red]" : ""
+          } 800px:block hidden`}
+        >
+          Change Password
+        </span>
+      </div>
+      <div
+        className="flex items-center cursor-pointer w-full mb-8"
+        onClick={() => setActive(9) || logoutHandler()}
+      >
+        <MdLogout size={20} color={active === 9 ? "red" : ""} />
+        <span
+          className={`pl-3 ${
+            active === 9 ? "text-[red]" : ""
           } 800px:block hidden`}
         >
           Log out
