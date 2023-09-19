@@ -79,8 +79,8 @@ const App = () => {
             <Route
               path="/shop/:id"
               element={
-                <SellerProtectedRoute>
-                  <ShopHomePage isSeller={isSeller} />
+                <SellerProtectedRoute isSeller={isSeller}>
+                  <ShopHomePage />
                 </SellerProtectedRoute>
               }
             />
