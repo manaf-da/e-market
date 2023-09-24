@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { BsPerson } from "react-icons/bs";
 import { LiaShoppingBasketSolid, LiaAddressBookSolid } from "react-icons/lia";
 import { HiOutlineReceiptRefund } from "react-icons/hi";
-import { RiMessage2Line, RiLockPasswordLine } from "react-icons/ri";
+import { RiLockPasswordLine } from "react-icons/ri";
 import { MdOutlineSpatialTracking, MdLogout, MdPayment } from "react-icons/md";
 import { server } from "../../server";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { HiInboxArrowDown } from "react-icons/hi2";
 
 const ProfileSidebar = ({ setActive, active }) => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const ProfileSidebar = ({ setActive, active }) => {
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(1)}
       >
-        <BsPerson size={20} color={active === 1 ? "red" : ""} />
+        <BsPerson size={22} color={active === 1 ? "red" : ""} />
         <span
           className={`pl-3 ${
             active === 1 ? "text-[red]" : ""
@@ -44,7 +45,7 @@ const ProfileSidebar = ({ setActive, active }) => {
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(2)}
       >
-        <LiaShoppingBasketSolid size={20} color={active === 2 ? "red" : ""} />
+        <LiaShoppingBasketSolid size={22} color={active === 2 ? "red" : ""} />
         <span
           className={`pl-3 ${
             active === 2 ? "text-[red]" : ""
@@ -57,7 +58,7 @@ const ProfileSidebar = ({ setActive, active }) => {
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(3)}
       >
-        <HiOutlineReceiptRefund size={20} color={active === 3 ? "red" : ""} />
+        <HiOutlineReceiptRefund size={22} color={active === 3 ? "red" : ""} />
         <span
           className={`pl-3 ${
             active === 3 ? "text-[red]" : ""
@@ -70,7 +71,7 @@ const ProfileSidebar = ({ setActive, active }) => {
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(4) || navigate("/inbox")}
       >
-        <RiMessage2Line size={20} color={active === 4 ? "red" : ""} />
+        <HiInboxArrowDown size={22} color={active === 4 ? "red" : ""} />
         <span
           className={`pl-3 ${
             active === 4 ? "text-[red]" : ""
@@ -83,7 +84,7 @@ const ProfileSidebar = ({ setActive, active }) => {
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(5)}
       >
-        <MdOutlineSpatialTracking size={20} color={active === 5 ? "red" : ""} />
+        <MdOutlineSpatialTracking size={22} color={active === 5 ? "red" : ""} />
         <span
           className={`pl-3 ${
             active === 5 ? "text-[red]" : ""
@@ -96,7 +97,7 @@ const ProfileSidebar = ({ setActive, active }) => {
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(6)}
       >
-        <MdPayment size={20} color={active === 6 ? "red" : ""} />
+        <MdPayment size={22} color={active === 6 ? "red" : ""} />
         <span
           className={`pl-3 ${
             active === 6 ? "text-[red]" : ""
@@ -109,7 +110,7 @@ const ProfileSidebar = ({ setActive, active }) => {
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(7)}
       >
-        <LiaAddressBookSolid size={20} color={active === 7 ? "red" : ""} />
+        <LiaAddressBookSolid size={22} color={active === 7 ? "red" : ""} />
         <span
           className={`pl-3 ${
             active === 7 ? "text-[red]" : ""
@@ -122,7 +123,7 @@ const ProfileSidebar = ({ setActive, active }) => {
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(8)}
       >
-        <RiLockPasswordLine size={20} color={active === 8 ? "red" : ""} />
+        <RiLockPasswordLine size={22} color={active === 8 ? "red" : ""} />
         <span
           className={`pl-3 ${
             active === 8 ? "text-[red]" : ""
@@ -135,7 +136,7 @@ const ProfileSidebar = ({ setActive, active }) => {
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(9) || logoutHandler()}
       >
-        <MdLogout size={20} color={active === 9 ? "red" : ""} />
+        <MdLogout size={22} color={active === 9 ? "red" : ""} />
         <span
           className={`pl-3 ${
             active === 9 ? "text-[red]" : ""
