@@ -23,11 +23,11 @@ import { useDispatch } from "react-redux";
 import { loadSeller, loadUser } from "./redux/actions/user";
 import {
   ShopHomePage,
-  ShopDashboardPage,
-  ShopCreateProduct,
-  ShopAllProducts,
   ShopCreateProductPage,
   ShopAllProductsPage,
+  ShopCreateEventsPage,
+  ShopAllEventsPage,
+  ShopAllCouponsPage,
 } from "./routes/ShopRoutes.js";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute";
@@ -38,7 +38,7 @@ const App = () => {
   useEffect(() => {
     dispatch(loadUser());
     dispatch(loadSeller());
-  }, []);
+  }, [dispatch]);
 
   return (
     <BrowserRouter>
@@ -90,7 +90,7 @@ const App = () => {
           path="/dashboard"
           element={
             <SellerProtectedRoute>
-              <ShopDashboardPage />
+              <ShopCreateEventsPage />
             </SellerProtectedRoute>
           }
         />
@@ -107,6 +107,30 @@ const App = () => {
           element={
             <SellerProtectedRoute>
               <ShopAllProductsPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-create-event"
+          element={
+            <SellerProtectedRoute>
+              <ShopCreateEventsPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-events"
+          element={
+            <SellerProtectedRoute>
+              <ShopAllEventsPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-coupons"
+          element={
+            <SellerProtectedRoute>
+              <ShopAllCouponsPage />
             </SellerProtectedRoute>
           }
         />

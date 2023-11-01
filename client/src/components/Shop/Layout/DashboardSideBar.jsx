@@ -159,7 +159,7 @@ const DashboardSidebar = ({ active }) => {
               active === 10 ? "text-[red]" : ""
             } 800px:block hidden`}
           >
-            Discount Codes
+            Refunds
           </span>
         </Link>
       </div>

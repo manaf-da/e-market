@@ -1,27 +1,26 @@
-import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect } from "react";
-import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getAllProductsShop } from "../../redux/actions/product";
-import { deleteProduct } from "../../redux/actions/product";
-import Loader from "../Layout/Loader";
+import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import Button from "@mui/material/Button";
+import { DataGrid } from "@mui/x-data-grid";
+import Loader from "./../Layout/Loader";
+import { deleteEvent, getAllEventsShop } from "../../redux/actions/event";
 
-const AllProducts = () => {
-  const { products, isLoading } = useSelector((state) => state.products);
+const AllEvents = () => {
+  const { events, isLoading } = useSelector((state) => state.events);
   const { seller } = useSelector((state) => state.seller);
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getAllEventsShop(seller._id));
+  }, [dispatch, seller._id]);
+
   const handleDelete = (id) => {
-    dispatch(deleteProduct(id));
+    dispatch(deleteEvent(id));
     window.location.reload();
   };
-
-  useEffect(() => {
-    dispatch(getAllProductsShop(seller._id));
-  }, [dispatch, seller._id]);
 
   const columns = [
     { field: "id", headerName: "Product Id", minWidth: 150, flex: 0.7 },
@@ -60,11 +59,13 @@ const AllProducts = () => {
       type: "number",
       sortable: false,
       renderCell: (params) => {
+        const d = params.row.name;
+        const product_name = d.replace(/\s+/g, "-");
         return (
           <>
-            <Link to={`/product/${params.id}`}>
-              <Button>
-                <AiOutlineEye size={20} />
+            <Link to={`/product/${product_name}`}>
+              <Button style={{ color: "gray" }}>
+                <AiOutlineEye size={22} />
               </Button>
             </Link>
           </>
@@ -81,8 +82,11 @@ const AllProducts = () => {
       renderCell: (params) => {
         return (
           <>
-            <Button onClick={() => handleDelete(params.id)}>
-              <AiOutlineDelete size={20} />
+            <Button
+              onClick={() => handleDelete(params.id)}
+              style={{ color: "gray" }}
+            >
+              <AiOutlineDelete size={22} />
             </Button>
           </>
         );
@@ -92,14 +96,14 @@ const AllProducts = () => {
 
   const row = [];
 
-  products &&
-    products.forEach((item) => {
+  events &&
+    events.forEach((item) => {
       row.push({
         id: item._id,
         name: item.name,
         price: "US$ " + item.discountPrice,
         Stock: item.stock,
-        sold: item?.sold_out,
+        sold: 10,
       });
     });
 
@@ -108,7 +112,7 @@ const AllProducts = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="w-full mx-8 pt-1 mt-10 bg-white">
+        <div className="w-full mx-8 pt-1  bg-white">
           <DataGrid
             rows={row}
             columns={columns}
@@ -122,4 +126,4 @@ const AllProducts = () => {
   );
 };
 
-export default AllProducts;
+export default AllEvents;

@@ -17,26 +17,43 @@ app.use(
     credentials: true,
   })
 );
+
 app.use("/", express.static("uploads"));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
-//config
+// Config
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config({
     path: "config/.env",
   });
 }
 
-//import routes
+// Import routes
 const user = require("./controller/user");
 const shop = require("./controller/shop");
 const product = require("./controller/product");
+const event = require("./controller/event");
+const coupon = require("./controller/couponCode");
 
 app.use("/api/v2/user", user);
 app.use("/api/v2/shop", shop);
 app.use("/api/v2/product", product);
+app.use("/api/v2/event", event);
+app.use("/api/v2/coupon", coupon);
 
-//It's for ErrorHandling
-app.use(ErrorHandler);
+// Error handling middleware (should come last)
+app.use((err, req, res, next) => {
+  if (err instanceof ErrorHandler) {
+    res.status(err.statusCode).json({
+      success: false,
+      message: err.message,
+    });
+  } else {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+});
 
 module.exports = app;

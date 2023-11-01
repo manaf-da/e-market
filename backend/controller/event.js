@@ -1,15 +1,16 @@
 const express = require("express");
-const { isSeller } = require("../middleware/auth");
+const Event = require("../models/event");
 const catchAsyncErrors = require("../middleware/catchAsyncError");
-const Product = require("../models/product");
-const router = express.Router();
 const { upload } = require("../multer");
 const Shop = require("../models/shop");
+const { isSeller } = require("../middleware/auth");
+const router = express.Router();
 const ErrorHandler = require("../utils/ErrorHandler");
+const fs = require("fs");
 
-/* Create A Product */
+/* Create An Event */
 router.post(
-  "/create-product",
+  "/create-event",
   upload.array("images"),
   catchAsyncErrors(async (req, res, next) => {
     try {
@@ -21,15 +22,15 @@ router.post(
       } else {
         const files = req.files;
         const imageUrls = files.map((file) => `${file.filename}`);
-        const productData = req.body;
-        productData.images = imageUrls;
-        productData.shop = shop;
+        const eventData = req.body;
+        eventData.images = imageUrls;
+        eventData.shop = shop;
 
-        const product = await Product.create(productData);
+        const event = await Event.create(eventData);
 
         res.status(201).json({
           success: true,
-          product,
+          event,
         });
       }
     } catch (error) {
@@ -38,15 +39,15 @@ router.post(
   })
 );
 
-/* Get A Product */
+//get all events of a shop
 router.get(
-  "/get-all-products-shop/:id",
+  "/get-all-events/:id",
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const products = await Product.find({ shopId: req.params.id });
+      const events = await Event.find({ shopId: req.params.id });
       res.status(201).json({
         success: true,
-        products,
+        events,
       });
     } catch (error) {
       return next(new ErrorHandler(error, 400));
@@ -54,17 +55,16 @@ router.get(
   })
 );
 
-// delete product of a shop
+//delete an event
 router.delete(
-  "/delete-shop-product",
+  "/delete-shop-event/:id",
   isSeller,
   catchAsyncErrors(async (req, res, next) => {
     try {
       const productId = req.params.id;
+      const eventData = await Event.findById(productId);
 
-      const productData = await Product.findById(productId);
-
-      productData.images.forEach((imageUrl) => {
+      eventData.images.forEach((imageUrl) => {
         const filename = imageUrl;
         const filePath = `uploads/${filename}`;
 
@@ -74,14 +74,15 @@ router.delete(
           }
         });
       });
-      const product = await Product.findByIdAndDelete(productId);
+      const event = await Event.findByIdAndDelete(productId);
 
-      if (!product) {
-        return next(new ErrorHandler("Product not found with this id! ", 500));
+      if (!event) {
+        return next(new ErrorHandler("Event not found with this id!", 500));
       }
+
       res.status(201).json({
         success: true,
-        message: "Product deleted successfully",
+        message: "Event deleted successfully",
       });
     } catch (error) {
       return next(new ErrorHandler(error, 400));
