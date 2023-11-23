@@ -28,9 +28,9 @@ const CreateProduct = () => {
     if (success) {
       toast.success("Product created successfully!");
       navigate("/dashboard");
-      window.location.reload();
+      /*   window.location.reload(); */
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, success, navigate]);
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -51,6 +51,11 @@ const CreateProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!name || !description || !category || !discountPrice || !stock) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
 
     const newForm = new FormData();
 

@@ -8,16 +8,16 @@ import SuggestedProduct from "../components/Products/SuggestedProduct";
 import { useSelector } from "react-redux";
 
 const ProductDetailsPage = () => {
-  const { products } = useSelector((state) => state.products);
+  const { allProducts } = useSelector((state) => state.products);
 
   const { name } = useParams();
   const [data, setData] = useState(null);
   const productName = name.replace(/-/g, " ");
 
   useEffect(() => {
-    const data = products.find((i) => i.name === productName);
+    const data = allProducts && allProducts.find((i) => i.name === productName);
     setData(data);
-  }, [products, productName]);
+  }, [allProducts, productName]);
   return (
     <div>
       <Header />

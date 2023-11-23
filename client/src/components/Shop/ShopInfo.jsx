@@ -6,6 +6,7 @@ import styles from "../../styles/styles";
 import Loader from "../Layout/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductsShop } from "../../redux/actions/product";
+import { backend_url } from "../../server";
 
 const ShopInfo = ({ isOwner }) => {
   const [data, setData] = useState({});
@@ -27,7 +28,7 @@ const ShopInfo = ({ isOwner }) => {
         console.log(error);
         setIsLoading(false);
       });
-  }, []);
+  }, [dispatch, id]);
 
   const logoutHandler = async () => {
     axios.get(`${server}/shop/logout`, {
@@ -36,10 +37,10 @@ const ShopInfo = ({ isOwner }) => {
     window.location.reload();
   };
 
-  const totalReviewsLength =
+  /*  const totalReviewsLength =
     products &&
-    products.reduce((acc, product) => acc + product.reviews.length, 0);
-
+    products.reduce((acc, product) => acc + product.reviews.length, 0); */
+  /* 
   const totalRatings =
     products &&
     products.reduce(
@@ -50,6 +51,9 @@ const ShopInfo = ({ isOwner }) => {
 
   const averageRating = totalRatings / totalReviewsLength || 0;
 
+ */
+
+  /*   const totalProducts = products ? products.length : 0; */
   return (
     <>
       {isLoading ? (
@@ -59,7 +63,7 @@ const ShopInfo = ({ isOwner }) => {
           <div className="w-full py-5">
             <div className="w-full flex item-center justify-center">
               <img
-                src={`${data.avatar?.url}`}
+                src={`${backend_url}${data.avatar}`}
                 alt=""
                 className="w-[150px] h-[150px] object-cover rounded-full"
               />
@@ -79,11 +83,11 @@ const ShopInfo = ({ isOwner }) => {
           </div>
           <div className="p-3">
             <h5 className="font-[600]">Total Products</h5>
-            <h4 className="text-[#000000a6]">{products && products.length}</h4>
+            <h4 className="text-[#000000a6]">10</h4>
           </div>
           <div className="p-3">
             <h5 className="font-[600]">Shop Ratings</h5>
-            <h4 className="text-[#000000b0]">{averageRating}/5</h4>
+            <h4 className="text-[#000000b0]">4/5</h4>
           </div>
           <div className="p-3">
             <h5 className="font-[600]">Joined On</h5>

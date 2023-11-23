@@ -1,6 +1,7 @@
 import axios from "axios";
 import { server } from "../../server";
 
+// Create a new product
 export const createProduct = (newForm) => async (dispatch) => {
   try {
     dispatch({
@@ -20,12 +21,14 @@ export const createProduct = (newForm) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "productCreateFail",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || "Failed to create a product",
     });
+    // Consider logging the error for debugging purposes
+    console.error("Error in createProduct:", error);
   }
 };
 
-/*  Get All Products */
+// Get all products of a shop
 export const getAllProductsShop = (id) => async (dispatch) => {
   try {
     dispatch({
@@ -41,12 +44,16 @@ export const getAllProductsShop = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getAllProductsShopFail",
-      payload: error.response.data.message,
+      payload:
+        error.response?.data?.message ||
+        "Failed to get all products in the shop",
     });
+    // Consider logging the error for debugging purposes
+    console.error("Error in getAllProductsShop:", error);
   }
 };
 
-/* Delete A Product in Shop */
+// Delete a product in a shop
 export const deleteProduct = (id) => async (dispatch) => {
   try {
     dispatch({
@@ -66,7 +73,31 @@ export const deleteProduct = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "deleteProductFail",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || "Failed to delete the product",
     });
+    // Consider logging the error for debugging purposes
+    console.error("Error in deleteProduct:", error);
+  }
+};
+
+// Get all products
+export const getAllProducts = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: "getAllProductsRequest",
+    });
+
+    const { data } = await axios.get(`${server}/product/get-all-products`);
+    dispatch({
+      type: "getAllProductsSuccess",
+      payload: data.products,
+    });
+  } catch (error) {
+    dispatch({
+      type: "getAllProductsFail",
+      payload: error.response?.data?.message || "Failed to get all products",
+    });
+    // Consider logging the error for debugging purposes
+    console.error("Error in getAllProducts:", error);
   }
 };

@@ -28,7 +28,7 @@ router.post(
 
         const event = await Event.create(eventData);
 
-        res.status(201).json({
+        res.status(200).json({
           success: true,
           event,
         });
@@ -39,7 +39,23 @@ router.post(
   })
 );
 
-//get all events of a shop
+/* get all events of a shop */
+router.get(
+  "/get-all-events",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const events = await Event.find();
+      res.status(201).json({
+        success: true,
+        events,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+//get an event of a shop
 router.get(
   "/get-all-events/:id",
   catchAsyncErrors(async (req, res, next) => {

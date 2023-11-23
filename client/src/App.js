@@ -31,6 +31,8 @@ import {
 } from "./routes/ShopRoutes.js";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute";
+import { getAllProducts } from "./redux/actions/product.js";
+import { getAllEvents } from "./redux/actions/event.js";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -38,6 +40,8 @@ const App = () => {
   useEffect(() => {
     dispatch(loadUser());
     dispatch(loadSeller());
+    dispatch(getAllProducts());
+    dispatch(getAllEvents());
   }, [dispatch]);
 
   return (

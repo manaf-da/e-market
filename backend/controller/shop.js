@@ -179,6 +179,7 @@ router.get(
   })
 );
 
+/* Get shop Info */
 router.get(
   "/get-shop-info/:id",
   catchAsyncErrors(async (req, res, next) => {
