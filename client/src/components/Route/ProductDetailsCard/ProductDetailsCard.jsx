@@ -8,10 +8,16 @@ import {
 } from "react-icons/ai";
 import { RiMessage2Line } from "react-icons/ri";
 import styles from "../../../styles/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { addToCart } from "./../../../redux/actions/cart";
 
-const productDetailsCard = ({ data, setOpen }) => {
+const ProductDetailsCard = ({ data, setOpen }) => {
+  const { cart } = useSelector((state) => state.cart);
   const [click, setClick] = useState(false);
   const [count, setCount] = useState(1);
+
+  const dispatch = useDispatch();
 
   const handleMessageSubmit = () => {};
 
@@ -22,6 +28,21 @@ const productDetailsCard = ({ data, setOpen }) => {
   };
   const incrementCount = () => {
     setCount(count + 1);
+  };
+
+  const addToCartHandler = (id) => {
+    const existingItem = cart && cart.find((item) => item._id === id);
+    if (existingItem) {
+      toast.error("Item already added to cart");
+    } else {
+      if (data.stock < count) {
+        toast.error("Product stock is limited");
+      } else {
+        const cartData = { ...data, qty: count };
+        dispatch(addToCart(cartData));
+        toast.success("Item added  to cart successfully");
+      }
+    }
   };
 
   return (
@@ -117,6 +138,7 @@ const productDetailsCard = ({ data, setOpen }) => {
                 </div>
                 <div
                   className={`${styles.button} mt-6  h-11 flex items-center`}
+                  onClick={() => addToCartHandler(data._id)}
                 >
                   <span className="text-[#fff] flex items-center">
                     Add to cart <AiOutlineShoppingCart className="ml-1" />
@@ -131,4 +153,4 @@ const productDetailsCard = ({ data, setOpen }) => {
   );
 };
 
-export default productDetailsCard;
+export default ProductDetailsCard;

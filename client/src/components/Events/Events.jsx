@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "../../styles/styles";
 import EventCard from "./EventCard";
 import { useSelector } from "react-redux";
@@ -6,7 +6,10 @@ import { useSelector } from "react-redux";
 const Events = () => {
   const { allEvents, isLoading } = useSelector((state) => state.events);
 
-  console.log(allEvents);
+  /*  useEffect(() => {
+    const data = allEvents && allEvents.find((a, b) => a.sold_out - b.sold_out);
+  }, [allEvents]); */
+
   return (
     <div>
       {!isLoading && (
