@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { backend_url } from "../../server";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   AiOutlineCamera,
   AiOutlineArrowRight,
@@ -11,19 +11,26 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { MdOutlineTrackChanges } from "react-icons/md";
+import { updateUserInformation } from "../../redux/actions/user";
+import { toast } from "react-toastify";
 
 const ProfileContent = ({ active }) => {
-  const { user } = useSelector((state) => state.user);
+  const { user, error } = useSelector((state) => state.user);
   const [name, setName] = useState(user && user.name);
   const [email, setEmail] = useState(user && user.email);
   const [phoneNumber, setPhoneNumber] = useState(user && user.phoneNumber);
-  const [password, setPassword] = useState(user && user.password);
-  const [zipCode, setZipCode] = useState();
-  const [address1, setAddress1] = useState();
-  const [address2, setAddress2] = useState();
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(updateUserInformation(name, email, phoneNumber, password));
   };
 
   return (
@@ -48,7 +55,7 @@ const ProfileContent = ({ active }) => {
           </div>
           <br />
           <div className="w-full px-5">
-            <form onSubmit={handleSubmit} aria-required={true}>
+            <form onSubmit={handleSubmit}>
               <div className="w-full 800px:flex block pb-3">
                 <div className=" w-[100%] 800px:w-[50%]">
                   <label className="block pb-2">Full Name</label>
@@ -56,22 +63,21 @@ const ProfileContent = ({ active }) => {
                     type="text"
                     className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
                     required
-                    value={name}
+                    value={name || ""}
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
-                <div className=" w-[100%] 800px:w-[50%]">
-                  <label className="block pb-2">Email Address</label>
-                  <input
-                    type="text"
-                    className={`${styles.input} !w-[95%] mb-1 800px:mb-0`}
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
               </div>
-
+              <div className=" w-[100%] 800px:w-[50%] pb-3">
+                <label className="block pb-2">Email Address</label>
+                <input
+                  type="text"
+                  className={`${styles.input} !w-[95%] mb-1 800px:mb-0`}
+                  required
+                  value={email || ""}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
               <div className="w-full 800px:flex block pb-3">
                 <div className=" w-[100%] 800px:w-[50%]">
                   <label className="block pb-2">Phone Number</label>
@@ -79,49 +85,20 @@ const ProfileContent = ({ active }) => {
                     type="number"
                     className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
                     required
-                    value={phoneNumber}
+                    value={phoneNumber || ""}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                   />
                 </div>
-
-                <div className=" w-[100%] 800px:w-[50%]">
-                  <label className="block pb-2">Zip Code</label>
-                  <input
-                    type="number"
-                    className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
-                    required
-                    value={zipCode}
-                    onChange={(e) => setZipCode(e.target.value)}
-                  />
-                </div>
               </div>
-              <div className="w-full 800px:flex block pb-3">
-                <div className=" w-[100%] 800px:w-[50%]">
-                  <label className="block pb-2">Address 1</label>
-                  <input
-                    type="text"
-                    className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
-                    required
-                    value={address1}
-                    onChange={(e) => setAddress1(e.target.value)}
-                  />
-                </div>
-
-                <div className=" w-[100%] 800px:w-[50%]">
-                  <label className="block pb-2">
-                    Address 1
-                    <span className="text-gray-500 text-base ml-1">
-                      (Optional)
-                    </span>
-                  </label>
-                  <input
-                    type="number"
-                    className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
-                    required
-                    value={address2}
-                    onChange={(e) => setAddress2(e.target.value)}
-                  />
-                </div>
+              <div className=" w-[100%] 800px:w-[50%]">
+                <label className="block pb-2">Password</label>
+                <input
+                  type="password"
+                  className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                  required
+                  value={password || ""}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
               <input
                 className={`w-[250px] h-[40px] border border-[#3a24db] text-center text-[#3a24db] rounded-[3px] mt-8 cursor-pointer`}
