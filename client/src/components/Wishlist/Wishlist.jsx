@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { HiOutlineShoppingBag } from "react-icons/hi";
 import styles from "./../../styles/styles";
 import { AiOutlineHeart } from "react-icons/ai";
-import { Link } from "react-router-dom";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BsCartPlus } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
@@ -27,51 +25,49 @@ const Wishlist = ({ setOpenWishlist }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10">
-      <div className="fixed top-0 right-0 h-full w-[80%] 800px:w-[25%] bg-white flex flex-col overflow-y-scroll justify-between shadow-sm">
+      <div className="fixed top-0 right-0 h-full w-[80%] overflow-y-scroll 800px:w-[25%] bg-white flex flex-col justify-between shadow-sm">
         {wishlist && wishlist.length === 0 ? (
           <div className="w-full h-screen flex items-center justify-center">
-            <div className="flex w-full justify-end pt-5 pr-5 fixed top-0 right-3">
+            <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
               <AiOutlineClose
-                size={22}
-                className="cursor-pointer "
+                size={30}
+                className="cursor-pointer"
                 onClick={() => setOpenWishlist(false)}
               />
             </div>
-            <h5 className="text-gray-500 capitalize">
-              Wishlist Items are empty!
-            </h5>
+            <h5>Wishlist Items is empty!</h5>
           </div>
         ) : (
           <>
             <div>
-              <div className="flex w-full justify-end pt-5 pr-5 fixed top-0 right-3">
+              <div className="flex w-full justify-end pt-5 pr-5">
                 <AiOutlineClose
-                  size={22}
-                  className="cursor-pointer "
+                  size={30}
+                  className="cursor-pointer"
                   onClick={() => setOpenWishlist(false)}
                 />
               </div>
-            </div>
+              {/* Item length */}
+              <div className={`${styles.normalFlex} p-4`}>
+                <AiOutlineHeart size={25} />
+                <h5 className="pl-2 text-[20px] font-[500]">
+                  {wishlist && wishlist.length} items
+                </h5>
+              </div>
 
-            {/* Item length */}
-            <div className={`${styles.normalFlex} p-4`}>
-              <AiOutlineHeart size={25} />
-              <h5 className="pl-2 text-[20px] font-[500]">
-                {wishlist && wishlist.length}
-              </h5>
-            </div>
-            <br />
-            {/* Single Items   */}
-            <div className="w-full border-t">
-              {wishlist &&
-                wishlist.map((i, index) => (
-                  <SingleWishlist
-                    key={index}
-                    data={i}
-                    removeFromWishlistHandler={removeFromWishlistHandler}
-                    addToCartHandler={addToCartHandler}
-                  />
-                ))}
+              {/* cart Single Items */}
+              <br />
+              <div className="w-full border-t">
+                {wishlist &&
+                  wishlist.map((i, index) => (
+                    <SingleWishlist
+                      key={index}
+                      data={i}
+                      removeFromWishlistHandler={removeFromWishlistHandler}
+                      addToCartHandler={addToCartHandler}
+                    />
+                  ))}
+              </div>
             </div>
           </>
         )}
@@ -98,7 +94,7 @@ const SingleWishlist = ({
           onClick={() => removeFromWishlistHandler(data)}
         />
         <img
-          src={`${backend_url}${data?.images[0]}`}
+          src={`${data.images && data.images[0]?.url}`}
           alt=""
           className="w-[130px] h-min ml-2 mr-2 rounded-[5px]"
         />
@@ -108,12 +104,14 @@ const SingleWishlist = ({
             US${totalPrice}
           </h4>
         </div>
-        <BsCartPlus
-          className="cursor-pointer text-gray-800"
-          size={30}
-          title="Add to cart"
-          onClick={() => addToCartHandler(data)}
-        />
+        <div>
+          <BsCartPlus
+            className="cursor-pointer text-gray-800"
+            size={30}
+            title="Add to cart"
+            onClick={() => addToCartHandler(data)}
+          />
+        </div>
       </div>
     </div>
   );

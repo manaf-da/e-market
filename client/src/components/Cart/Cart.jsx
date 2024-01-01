@@ -129,18 +129,18 @@ const SingleCart = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
             className={`bg-[#e44343] border border-[#e4434373] rounded-full w-[25px] h-[25px] ${styles.normalFlex} justify-center cursor-pointer`}
             onClick={() => increment(data)}
           >
-            <AiOutlinePlus size={18} color="#fff" />
+            <AiOutlinePlus size={20} color="#fff" />
           </div>
           <span className="pl-[10px]">{data.qty}</span>
           <div
             className="bg-[#a7abb14f] rounded-full w-[25px] h-[25px] flex items-center justify-center cursor-pointer"
             onClick={() => decrement(data)}
           >
-            <AiOutlineMinus size={16} color="#7d879c" />
+            <AiOutlineMinus size={20} color="#7d879c" />
           </div>
         </div>
         <img
-          src={`${backend_url}${data?.images[0]}`}
+          src={`${data.images && data.images[0]?.url}`}
           alt=""
           className="w-[130px] h-min ml-2 mr-2 rounded-[5px]"
         />

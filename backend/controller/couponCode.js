@@ -29,7 +29,7 @@ router.post(
     }
   })
 );
-
+      
 /* Get a single coupon of a shop */
 
 router.get(
