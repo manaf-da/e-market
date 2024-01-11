@@ -209,7 +209,34 @@ router.put(
         user,
       });
     } catch (error) {
-      console.log("Error:", error);
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+/* Update user avatar */
+router.put(
+  "/update-avatar",
+  isAuthenticated,
+  upload.single("image"),
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const existUser = await User.findById(req.user.id);
+
+      const existAvatarPath = `uploads/${existUser.avatar}`;
+      fs.unlinkSync(existAvatarPath);
+
+      const fileUrl = path.join(req.file.filename);
+
+      const user = await User.findByIdAndUpdate(req.user.id, {
+        avatar: fileUrl,
+      });
+
+      res.status(200).json({
+        success: true,
+        user,
+      });
+    } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }
   })
